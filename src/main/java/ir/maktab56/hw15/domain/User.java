@@ -1,0 +1,127 @@
+package ir.maktab56.hw15.domain;
+
+import ir.maktab56.hw15.base.domain.BaseEntity;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class User extends BaseEntity<Integer> {
+
+
+    public User() {
+        setRegisterDate(Date.valueOf(LocalDate.now()));
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+        setRegisterDate(Date.valueOf(LocalDate.now()));
+    }
+
+    @Column(name = "USER_NAME", nullable = false, unique = true)
+    private String username;
+
+    @Column(name = "PASSWORD", nullable = false)
+    private String password;
+
+    @Column(name = "DATE", nullable = false)
+    private Date registerDate;
+
+    @Column(name = "AGE", nullable = false)
+    private int age;
+
+    @Column(name = "PHONE_NUMBER", nullable = false)
+    private String phonenumber;
+
+    @Column(name = "CITY")
+    private String city;
+
+    @Column(name = "ADDRESS")
+    private String address;
+
+    private boolean isBlocked=false;
+
+
+    @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL)
+    private List<Account> accountList=new ArrayList<>();
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public List<Account> getAccountList() {
+        return accountList;
+    }
+
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+}
