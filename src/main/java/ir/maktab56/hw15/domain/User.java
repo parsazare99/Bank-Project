@@ -14,7 +14,6 @@ import java.util.List;
 @Entity
 public class User extends BaseEntity<Integer> {
 
-
     public User() {
         setRegisterDate(Date.valueOf(LocalDate.now()));
     }
@@ -25,13 +24,22 @@ public class User extends BaseEntity<Integer> {
         setRegisterDate(Date.valueOf(LocalDate.now()));
     }
 
+    @Column(name = "FIRST_NAME")
+    private String firstname;
+
+    @Column(name = "LAST_NAME")
+    private String lastname;
+
     @Column(name = "USER_NAME", nullable = false, unique = true)
     private String username;
 
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    @Column(name = "DATE", nullable = false)
+    @Column(name="IS_ACTIVE")
+    private boolean isActive=false;
+
+    @Column(name = "REGISTER_DATE", nullable = false)
     private Date registerDate;
 
     @Column(name = "AGE", nullable = false)
@@ -40,13 +48,17 @@ public class User extends BaseEntity<Integer> {
     @Column(name = "PHONE_NUMBER", nullable = false)
     private String phonenumber;
 
-    @Column(name = "CITY")
-    private String city;
+//    @Column(name = "CITY")
+//    private String city;
 
-    @Column(name = "ADDRESS")
-    private String address;
+//    @Column(name = "ADDRESS")
+//    private String address;
 
+    @Column(name = "IS_BLOCKED")
     private boolean isBlocked=false;
+
+    @Column(name = "MASSAGE")
+    private String massage;
 
 
     @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL)
@@ -85,20 +97,53 @@ public class User extends BaseEntity<Integer> {
         this.phonenumber = phonenumber;
     }
 
-    public String getCity() {
-        return city;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getAddress() {
-        return address;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+
+    //    public String getCity() {
+//        return city;
+//    }
+//
+//    public void setCity(String city) {
+//        this.city = city;
+//    }
+
+//    public String getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(String address) {
+//        this.address = address;
+//    }
+
+    public String getMassage() {
+        return massage;
+    }
+
+    public void setMassage(String massage) {
+        this.massage = massage;
     }
 
     public Date getRegisterDate() {
