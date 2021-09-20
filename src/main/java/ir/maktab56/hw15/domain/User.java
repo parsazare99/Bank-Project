@@ -48,12 +48,6 @@ public class User extends BaseEntity<Integer> {
     @Column(name = "PHONE_NUMBER", nullable = false)
     private String phonenumber;
 
-//    @Column(name = "CITY")
-//    private String city;
-
-//    @Column(name = "ADDRESS")
-//    private String address;
-
     @Column(name = "IS_BLOCKED")
     private boolean isBlocked=false;
 
@@ -121,23 +115,6 @@ public class User extends BaseEntity<Integer> {
         isActive = active;
     }
 
-
-    //    public String getCity() {
-//        return city;
-//    }
-//
-//    public void setCity(String city) {
-//        this.city = city;
-//    }
-
-//    public String getAddress() {
-//        return address;
-//    }
-//
-//    public void setAddress(String address) {
-//        this.address = address;
-//    }
-
     public String getMassage() {
         return massage;
     }
@@ -168,5 +145,16 @@ public class User extends BaseEntity<Integer> {
 
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", isActive=" + isActive +
+                ", isBlocked=" + isBlocked +
+                ", massage='" + massage + '\'' +
+                '}';
     }
 }

@@ -15,6 +15,6 @@ public class TransactionRepositoryImp extends BaseEntityRepositoryImpl<Transacti
 
     @Override
     public Class<Transaction> getEntityClass() {
-        return null;
+        return Transaction.class;
     }
 }

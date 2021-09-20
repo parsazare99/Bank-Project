@@ -13,6 +13,6 @@ public class AccountRepositoryImp extends BaseEntityRepositoryImpl<Account, Inte
 
     @Override
     public Class<Account> getEntityClass() {
-        return null;
+        return Account.class;
     }
 }

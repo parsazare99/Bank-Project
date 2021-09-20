@@ -13,6 +13,6 @@ public class BankRepositoryImp extends BaseEntityRepositoryImpl<Bank, Integer> i
 
     @Override
     public Class<Bank> getEntityClass() {
-        return null;
+        return Bank.class;
     }
 }

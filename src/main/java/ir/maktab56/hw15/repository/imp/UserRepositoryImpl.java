@@ -52,7 +52,7 @@ public class UserRepositoryImpl extends BaseEntityRepositoryImpl<User, Integer> 
 
 
     @Override
-    public User findByUsername(String username, String password) {
+    public User findByUsernameAndPassword(String username, String password) {
         User user = entityManager.createQuery(
                 "from " + getEntityClass().getSimpleName() +
                         " u where u.username = :username and u.password = :password"
@@ -61,5 +61,15 @@ public class UserRepositoryImpl extends BaseEntityRepositoryImpl<User, Integer> 
         return user;
 
 
-}
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        User user = entityManager.createQuery(
+                "from " + getEntityClass().getSimpleName() +
+                        " u where u.username = :username"
+                , this.getEntityClass()).setParameter("username", username).getSingleResult();
+
+        return user;
+    }
 }

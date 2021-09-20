@@ -15,12 +15,25 @@ public class Employee extends BaseEntity<Integer> {
 
     public Employee() {
         setRegisterDate(Date.valueOf(LocalDate.now()));
+
     }
 
-    @Column(name = "FIRST_NAME")
+    public Employee(String firstname, String lastname, String username, String password, boolean isActive, boolean isManager ,int age) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.password = password;
+        this.isActive = isActive;
+        this.isManager = isManager;
+        this.age=age;
+        setRegisterDate(Date.valueOf(LocalDate.now()));
+
+    }
+
+    @Column(name = "FIRST_NAME", nullable = false)
     private String firstname;
 
-    @Column(name = "LAST_NAME")
+    @Column(name = "LAST_NAME", nullable = false)
     private String lastname;
 
     @Column(name = "USER_NAME", nullable = false, unique = true)
@@ -29,34 +42,30 @@ public class Employee extends BaseEntity<Integer> {
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    @Column(name="IS_ACTIVE")
-    private boolean isActive=false;
+    @Column(name = "IS_ACTIVE")
+    private boolean isActive = false;
 
     @Column(name = "REGISTER_DATE", nullable = false)
     private Date registerDate;
 
-    @Column(name = "AGE", nullable = false)
+    @Column(name = "AGE")
     private int age;
 
-    @Column(name = "PHONE_NUMBER", nullable = false)
+    @Column(name = "PHONE_NUMBER")
     private String phonenumber;
-
-    @Column(name = "CITY")
-    private String city;
 
     @Column(name = "ADDRESS")
     private String address;
 
     @Column(name = "IS_BLOCKED")
-    private boolean isBlocked=false;
+    private boolean isBlocked = false;
+
+    @Column(name = "IS_MANAGER")
+    private boolean isManager = false;
 
     @ManyToOne
-    @JoinColumn(name="BANK_ID")
+    @JoinColumn(name = "BANK_ID")
     private Bank bank;
-
-    @ManyToOne
-    @JoinColumn(name="MANAGER_ID")
-    private Manager manager;
 
     @Column(name = "MASSAGE")
     private String massage;
@@ -101,14 +110,6 @@ public class Employee extends BaseEntity<Integer> {
         this.phonenumber = phonenumber;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -141,16 +142,16 @@ public class Employee extends BaseEntity<Integer> {
         return isActive;
     }
 
+    public boolean isManager() {
+        return isManager;
+    }
+
+    public void setManager(boolean manager) {
+        isManager = manager;
+    }
+
     public void setActive(boolean active) {
         isActive = active;
-    }
-
-    public Manager getManager() {
-        return manager;
-    }
-
-    public void setManager(Manager manager) {
-        this.manager = manager;
     }
 
     public void setBlocked(boolean blocked) {

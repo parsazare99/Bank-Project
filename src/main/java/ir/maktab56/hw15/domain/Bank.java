@@ -8,6 +8,13 @@ import java.util.List;
 
 @Entity
 public class Bank extends BaseEntity<Integer> {
+    public Bank() {
+    }
+
+    public Bank(String name, String branch) {
+        this.name = name;
+        Branch = branch;
+    }
 
     @Column(name = "BANK_NAME")
     private String name;
@@ -19,17 +26,16 @@ public class Bank extends BaseEntity<Integer> {
     @Column(name = "ADDRESS")
     private String address;
 
+    @Column(name = "MANAGER_NAME")
+    private String managername;
+
+
     @OneToMany(mappedBy = "bank")
     private List<Account> accountList = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "bank")
     private List<Employee> employeeList = new ArrayList<>();
-
-
-    @OneToOne
-    @JoinColumn(name = "MANAGER_ID")
-    private Manager manager;
 
     public String getName() {
         return name;
@@ -55,6 +61,18 @@ public class Bank extends BaseEntity<Integer> {
         this.address = address;
     }
 
+    public void setManager(String manager) {
+        this.address = manager;
+    }
+
+    public String getManagername() {
+        return managername;
+    }
+
+    public void setManagername(String managername) {
+        this.managername = managername;
+    }
+
     public List<Account> getAccountList() {
         return accountList;
     }
@@ -71,11 +89,4 @@ public class Bank extends BaseEntity<Integer> {
         this.employeeList = employeeList;
     }
 
-    public Manager getManager() {
-        return manager;
-    }
-
-    public void setManager(Manager manager) {
-        this.manager = manager;
-    }
 }

@@ -27,12 +27,25 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
     public User register() {
 
         User user = new User();
+        System.out.println("Enter your First Name :");
+        user.setFirstname(new Scanner(System.in).next());
+        System.out.println("Enter your Last Name :");
+        user.setLastname(new Scanner(System.in).next());
 
-        System.out.println("Enter your UserName :");
-        user.setUsername(input.next());
-
-        System.out.println("Enter your passWord :");
         while (true) {
+            System.out.println("Enter your UserName :");
+            String username = new Scanner(System.in).next();
+            if (!repository.existByUsername(username)) {
+                user.setUsername(username);
+                break;
+            } else {
+                System.out.println("sorry, this username is already taken ");
+            }
+
+        }
+
+        while (true) {
+            System.out.println("Enter your passWord :");
             System.out.println("Password length must be 8 or more ");
             String password = input.next();
             if (password.length() >= 8) {
@@ -45,44 +58,100 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
         System.out.println("Enter your age :");
         user.setAge(input.nextInt());
 
-        System.out.println("Enter your phone number :");
-        user.setPhonenumber(input.next());
-
-        System.out.println("Wellcome to System !");
+        System.out.println("Wellcome to Refah Bank\n" +
+                "Your account has been created.\n" +
+                " You will have to wait for your account to be verified");
         save(user);
         return user;
     }
 
     @Override
     public User logIn() {
-
+        int answer = 0;
+        int wrongPassword = 0;
+        int wrongUsername = 0;
+        User user;
         String username;
         String password;
         while (true) {
-
             System.out.println("Enter your Username :");
             username = input.next();
             if (repository.existByUsername(username)) {
+                user = repository.findByUsername(username);
 
-                while (true) {
-                    System.out.println("please Enter your password : ");
-                    password = input.next();
-                    if (repository.existByPassword(username, password)) {
-
-                        System.out.println("The log in was successful !");
-                        return repository.findByUsername(username, password);
-                    } else {
-                        System.out.println("password is Wrong!!!!");
+                if (user.isBlocked()) {
+                    System.out.println("Your account is blocked\n" +
+                            "and you can not use the service\n\n" +
+                            "Do you want to leave a message for bank employees to unblock your account?\n" +
+                            "1 : YES\n" +
+                            "2 : NO");
+                    answer = input.nextInt();
+                    if (answer == 1) {
+                        System.out.println("Enter your message");
+                        String massage = new Scanner(System.in).nextLine();
+                        user.setMassage(massage);
+                        save(user);
                     }
+                    return null;
+                } else if (user.isActive() == false) {
+
+                    System.out.println("Your account is not Active\n" +
+                            "and you can not use the service\n\n" +
+                            "Do you want to leave a message for bank employees to expedite the activation process?\n" +
+                            "1 : YES\n" +
+                            "2 : NO");
+                    answer = input.nextInt();
+                    if (answer == 1) {
+                        System.out.println("Enter your message");
+                        String massage = new Scanner(System.in).nextLine();
+                        user.setMassage(massage);
+                        save(user);
+                        return null;
+                    }
+                } else {
+
+                    while (true) {
+                        System.out.println("please Enter your password : ");
+                        password = input.next();
+                        if (password == user.getPassword()) {
+                            System.out.println("The log in was successful !");
+                            return user;
+                        } else {
+                            wrongPassword++;
+                            if (wrongPassword == 3) {
+                                user.setBlocked(true);
+                                save(user);
+                                System.out.println("Your account has been blocked\n" +
+                                        "due to incorrect password entry");
+                                System.out.println("Do you want to leave a message for bank employees to unblock your account?\n" +
+                                        "1 : YES\n" +
+                                        "2 : NO");
+                                answer = input.nextInt();
+                                if (answer == 1) {
+                                    System.out.println("Enter your message");
+                                    user.setMassage(new Scanner(System.in).nextLine());
+                                    save(user);
+                                }
+                                return null;
+
+                            }
+                        }
+
+                    }
+
                 }
 
             } else {
-                System.out.println("username is Wrong!!!!");
+                wrongUsername++;
+                if (wrongUsername == 3) break;
+                System.out.println("This username is not available!!!\n" +
+                        "please try again");
 
             }
 
         }
 
+        return null;
     }
 
 
@@ -95,11 +164,9 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
                 "2 : Change Password\n" +
                 "3 : Change Age \n" +
                 "4 : Change Phone Number\n" +
-                "5 : Change Bio\n" +
-                "6 : Change City\n" +
-                "7 : Change Country \n" +
-                "8 : Change Address\n" +
-                "9 : Exit");
+                "5 : Change Address\n" +
+                "6 : Post a message to employees\n" +
+                "7 : Exit");
 
         int a = input.nextInt();
         if (a == 1) {
@@ -120,22 +187,20 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
             user.setPhonenumber(input.next());
 
         } else if (a == 5) {
-            System.out.println("Enter your bio : ");
-            String bio = input.next();
-           // user.setBio(bio);
 
+            System.out.println("Enter your address : ");
+            user.setPassword(input.nextLine());
 
-        } else if (a == 7) {
+        } else if (a == 6) {
 
+            System.out.println("Enter your massage : ");
+            user.setPassword(input.nextLine());
 
-            System.out.println("Enter your country name : ");
-         //   user.setCountry(input.next());
-        }  else {
+        } else {
             return user;
         }
         save(user);
         return user;
-
     }
 
     @Override
@@ -146,6 +211,7 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
 
     @Override
     public void deleteAccount(User user) {
+        //Complete user deletion
         String password;
         while (true) {
             System.out.println("please Enter your password : ");
@@ -153,7 +219,7 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
             if (repository.existByPassword(user.getUsername(), password)) {
 
                 delete(user);
-                System.out.println("Account deletion was successful ! ");
+                System.out.println("Complete user deletion was successful ! ");
                 break;
 
             } else {
@@ -163,6 +229,7 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
         }
 
     }
+
 
     @Override
     public List<User> userSearch() {

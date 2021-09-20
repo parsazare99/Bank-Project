@@ -13,6 +13,6 @@ public class EmployeeRepositoryImp extends BaseEntityRepositoryImpl<Employee, In
 
     @Override
     public Class<Employee> getEntityClass() {
-        return null;
+        return Employee.class;
     }
 }

@@ -10,6 +10,7 @@ public interface UserRepository extends BaseEntityRepository<User, Integer> {
 
     boolean existByPassword(String username, String password);
 
-    User findByUsername(String username, String password);
+    User findByUsernameAndPassword(String username, String password);
 
+    User findByUsername(String username);
 }
