@@ -24,7 +24,134 @@ public class EmployeeServiceImpl extends BaseEntityServiceImpl<Employee, Integer
 
     AccountServiceImpl accountService = new AccountServiceImpl(new AccountRepositoryImp(HibernateUtil.getEntityMangerFactory().createEntityManager()));
     UserServiceImpl userService = new UserServiceImpl(new UserRepositoryImpl(HibernateUtil.getEntityMangerFactory().createEntityManager()));
+    BankServiceImpl bankService = new BankServiceImpl(new BankRepositoryImp(HibernateUtil.getEntityMangerFactory().createEntityManager()));
 
+
+    @Override
+    public Employee registerEmployee() {
+        Scanner input = new Scanner(System.in);
+        Employee employee = new Employee();
+        System.out.println("Enter your First Name :");
+        employee.setFirstname(input.next());
+
+        System.out.println("Enter your Last Name :");
+        employee.setLastname(input.next());
+        while (true) {
+            System.out.println("Enter your UserName :");
+            String username = input.next();
+            if (!repository.existByUsername(username)) {
+                employee.setUsername(username);
+                break;
+            } else {
+                System.out.println("sorry, this username is already taken ");
+            }
+
+        }
+
+        while (true) {
+            System.out.println("Enter your passWord :");
+            System.out.println("Password length must be 8 or more ");
+            String password = new Scanner(System.in).next();
+            if (password.length() >= 8) {
+                employee.setPassword(password);
+                break;
+            }
+            System.out.println("The length of the password is shor\nplease try againe");
+        }
+
+        System.out.println("Enter your age :");
+        employee.setAge(new Scanner(System.in).nextInt());
+        bankService.showBankInfoForClient();
+        System.out.println("Enter the bank ID in which you want to be employed");
+        int bankId = new Scanner(System.in).nextInt();
+        if (bankService.existsById(bankId)) {
+            Bank byId = bankService.findById(bankId);
+            employee.setBank(byId);
+        } else {
+            System.out.println("wrong bank id !!!");
+        }
+
+
+        System.out.println("Wellcome to Refah Bank\n");
+        System.out.println("Your registration has been completed successfully.\n" +
+                " Please wait for administrator approval to activate your account");
+        save(employee);
+        return employee;
+    }
+
+    @Override
+    public Employee logInEmployee() {
+        int answer = 0;
+        int wrongPassword = 0;
+        int wrongUsername = 0;
+        Employee employee;
+        String username;
+        String password;
+        while (true) {
+            System.out.println("Enter your Username :");
+            username = new Scanner(System.in).next();
+            if (repository.existByUsername(username)) {
+                employee = repository.findByUsername(username);
+
+                if (employee.isBlocked()) {
+                    System.out.println("Your account is blocked\n" +
+                            "and you can not use the service\n\n" +
+                            "Do you want to leave a message for bank manager to unblock your account?\n" +
+                            "1 : YES\n" +
+                            "2 : NO");
+                    answer = new Scanner(System.in).nextInt();
+                    if (answer == 1) {
+                        System.out.println("Enter your message");
+                        String massage = new Scanner(System.in).nextLine();
+                        employee.setMassage(massage);
+                        save(employee);
+                    }
+                    return null;
+                } else {
+
+                    while (true) {
+                        System.out.println("please Enter your password : ");
+                        password = new Scanner(System.in).next();
+                        if (password == employee.getPassword()) {
+                            System.out.println("The log in was successful !");
+                            return employee;
+                        } else {
+                            wrongPassword++;
+                            if (wrongPassword == 3) {
+                                employee.setBlocked(true);
+                                save(employee);
+                                System.out.println("Your account has been blocked\n" +
+                                        "due to incorrect password entry");
+                                System.out.println("Do you want to leave a message for bank employees to unblock your account?\n" +
+                                        "1 : YES\n" +
+                                        "2 : NO");
+                                answer = new Scanner(System.in).nextInt();
+                                if (answer == 1) {
+                                    System.out.println("Enter your message");
+                                    employee.setMassage(new Scanner(System.in).nextLine());
+                                    save(employee);
+                                }
+                                return null;
+
+                            }
+                        }
+
+                    }
+
+                }
+
+            } else {
+                wrongUsername++;
+                if (wrongUsername == 3) break;
+                System.out.println("This username is not available!!!\n" +
+                        "please try again");
+
+            }
+
+        }
+
+        return null;
+    }
 
     @Override
     public void addDefaultManager() {

@@ -5,7 +5,12 @@ import ir.maktab56.hw15.base.service.BaseEntityService;
 import ir.maktab56.hw15.domain.Employee;
 import ir.maktab56.hw15.domain.User;
 
-public interface EmployeeService extends BaseEntityService< Employee  ,Integer> {
+public interface EmployeeService extends BaseEntityService<Employee, Integer> {
+
+
+    Employee registerEmployee();
+
+    Employee logInEmployee();
 
     void addDefaultManager();
 

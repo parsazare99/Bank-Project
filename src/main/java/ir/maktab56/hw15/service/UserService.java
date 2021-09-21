@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface UserService extends BaseEntityService<User, Integer> {
 
-    User register();
+    User registerUser();
 
-    User logIn();
+    User logInUser();
 
-    User editProfile(User user);
+    User editProfileUser(User user);
 
-    void showProfile(User user);
+    void showProfileUser(User user);
 
     void deleteAccount(User user);
 

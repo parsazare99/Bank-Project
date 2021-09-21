@@ -19,12 +19,13 @@ public class CardServiceImpl extends BaseEntityServiceImpl<Card, Integer, CardRe
         super(repository);
     }
 
-    TransactionServiceImpl transactionService = new TransactionServiceImpl(new TransactionRepositoryImp(HibernateUtil.getEntityMangerFactory().createEntityManager()));
-    AccountServiceImpl accountService = new AccountServiceImpl(new AccountRepositoryImp(HibernateUtil.getEntityMangerFactory().createEntityManager()));
 
 
     @Override
     public void CardToCard(Account account) {
+        TransactionServiceImpl transactionService = new TransactionServiceImpl(new TransactionRepositoryImp(HibernateUtil.getEntityMangerFactory().createEntityManager()));
+        AccountServiceImpl accountService = new AccountServiceImpl(new AccountRepositoryImp(HibernateUtil.getEntityMangerFactory().createEntityManager()));
+
         if (account.isActive() && account.isBlocked() == false) {
             Scanner input = new Scanner(System.in);
             Transaction tran = new Transaction();

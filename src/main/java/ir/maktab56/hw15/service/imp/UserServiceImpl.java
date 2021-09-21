@@ -24,7 +24,7 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
     }
 
     @Override
-    public User register() {
+    public User registerUser() {
 
         User user = new User();
         System.out.println("Enter your First Name :");
@@ -64,7 +64,7 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
     }
 
     @Override
-    public User logIn() {
+    public User logInUser() {
         int answer = 0;
         int wrongPassword = 0;
         int wrongUsername = 0;
@@ -137,9 +137,8 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
         return null;
     }
 
-
     @Override
-    public User editProfile(User user) {
+    public User editProfileUser(User user) {
         Scanner input = new Scanner(System.in);
         System.out.println(user.toString());
 
@@ -187,9 +186,8 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
     }
 
     @Override
-    public void showProfile(User user) {
+    public void showProfileUser(User user) {
         System.out.println(user.toString());
-
     }
 
     @Override

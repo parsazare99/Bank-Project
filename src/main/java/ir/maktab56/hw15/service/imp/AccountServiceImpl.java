@@ -19,9 +19,6 @@ public class AccountServiceImpl extends BaseEntityServiceImpl<Account, Integer, 
         implements AccountService {
 
 
-    CardServiceImpl cardService = new CardServiceImpl(new CardRepositoryImp(HibernateUtil.getEntityMangerFactory().createEntityManager()));
-    BankServiceImpl bankService = new BankServiceImpl(new BankRepositoryImp(HibernateUtil.getEntityMangerFactory().createEntityManager()));
-    UserServiceImpl userService = new UserServiceImpl(new UserRepositoryImpl(HibernateUtil.getEntityMangerFactory().createEntityManager()));
 
     public AccountServiceImpl(AccountRepository repository) {
         super(repository);
@@ -29,6 +26,11 @@ public class AccountServiceImpl extends BaseEntityServiceImpl<Account, Integer, 
 
     @Override
     public Account createAccount(User user) {
+        CardServiceImpl cardService = new CardServiceImpl(new CardRepositoryImp(HibernateUtil.getEntityMangerFactory().createEntityManager()));
+        BankServiceImpl bankService = new BankServiceImpl(new BankRepositoryImp(HibernateUtil.getEntityMangerFactory().createEntityManager()));
+        UserServiceImpl userService = new UserServiceImpl(new UserRepositoryImpl(HibernateUtil.getEntityMangerFactory().createEntityManager()));
+
+
         user=userService.findById(user.getId());
         Account account = new Account();
         String cardPassword;
@@ -76,6 +78,8 @@ public class AccountServiceImpl extends BaseEntityServiceImpl<Account, Integer, 
 
     @Override
     public void showUserAccounts(User user) {
+        UserServiceImpl userService = new UserServiceImpl(new UserRepositoryImpl(HibernateUtil.getEntityMangerFactory().createEntityManager()));
+
 
         List<Account> accountList = userService.findById(user.getId()).getAccountList();
         for (Account a : accountList) {
