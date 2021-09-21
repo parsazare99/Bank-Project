@@ -24,6 +24,9 @@ public class Transaction extends BaseEntity<Integer> {
     @Column(name = "DESTINATION_CARD")
     private String DestinationCard;
 
+    @Column(name = "TRANSACTION_FEE")
+    private int transactionFee=600;
+
     @Column(name = "TRANSFER_AMOUNT")
    private long TransferAmount;
 
@@ -44,6 +47,14 @@ public class Transaction extends BaseEntity<Integer> {
 
     public String getOriginCard() {
         return OriginCard;
+    }
+
+    public int getTransactionFee() {
+        return transactionFee;
+    }
+
+    public void setTransactionFee(int transactionFee) {
+        this.transactionFee = transactionFee;
     }
 
     public void setOriginCard(String originCard) {

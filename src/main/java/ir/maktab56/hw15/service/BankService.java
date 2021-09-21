@@ -13,4 +13,5 @@ public interface BankService extends BaseEntityService<Bank, Integer> {
     void showBankInfoForClient();
 
 
+
 }

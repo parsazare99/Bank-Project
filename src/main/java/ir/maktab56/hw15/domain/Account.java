@@ -23,6 +23,9 @@ public class Account extends BaseEntity<Integer> {
     @Column(name = "IS_ACTIVE")
     private boolean isActive = false;
 
+    @Column(name = "IS_BLOCKED")
+    private boolean isBlocked=false;
+
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
@@ -40,6 +43,14 @@ public class Account extends BaseEntity<Integer> {
 
     public boolean isActive() {
         return isActive;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 
     public void setActive(boolean active) {
@@ -101,6 +112,7 @@ public class Account extends BaseEntity<Integer> {
                 "balance = " + balance +
                 ", AccountOpeningDate = " + AccountOpeningDate +
                 ", isActive = " + isActive +
+                ", isBlocked = " + isBlocked +
                 ", bank name = " + bank.getName() + "  " + ", bank branch = " + bank.getBranch() +
                 '}';
     }

@@ -48,4 +48,5 @@ public class BankServiceImpl extends BaseEntityServiceImpl<Bank, Integer, BankRe
             System.out.println(bank.showBankInfoForClient());
         }
     }
+
 }

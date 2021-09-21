@@ -15,4 +15,5 @@ public class AccountRepositoryImp extends BaseEntityRepositoryImpl<Account, Inte
     public Class<Account> getEntityClass() {
         return Account.class;
     }
+
 }

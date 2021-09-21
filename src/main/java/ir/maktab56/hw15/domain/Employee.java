@@ -173,4 +173,18 @@ public class Employee extends BaseEntity<Integer> {
     public void setMassage(String massage) {
         this.massage = massage;
     }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "ID ='" + getId() + '\'' +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", isActive=" + isActive +
+                ", age=" + age +
+                ", isBlocked=" + isBlocked +
+                ", isManager=" + isManager +
+                ", massage='" + massage + '\'' +
+                '}';
+    }
 }
