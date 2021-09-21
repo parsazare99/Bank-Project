@@ -40,4 +40,12 @@ public class BankServiceImpl extends BaseEntityServiceImpl<Bank, Integer, BankRe
         return bankList;
 
     }
+
+    @Override
+    public void showBankInfoForClient() {
+        List<Bank> bankList = findAll();
+        for (Bank bank : bankList) {
+            System.out.println(bank.showBankInfoForClient());
+        }
+    }
 }

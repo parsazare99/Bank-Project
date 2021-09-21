@@ -36,9 +36,6 @@ public class User extends BaseEntity<Integer> {
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    @Column(name="IS_ACTIVE")
-    private boolean isActive=false;
-
     @Column(name = "REGISTER_DATE", nullable = false)
     private Date registerDate;
 
@@ -107,13 +104,6 @@ public class User extends BaseEntity<Integer> {
         this.lastname = lastname;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
 
     public String getMassage() {
         return massage;
@@ -152,7 +142,6 @@ public class User extends BaseEntity<Integer> {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", isActive=" + isActive +
                 ", isBlocked=" + isBlocked +
                 ", massage='" + massage + '\'' +
                 '}';

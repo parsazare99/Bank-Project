@@ -1,19 +1,20 @@
 package ir.maktab56.hw15.service;
 
 import ir.maktab56.hw15.base.service.BaseEntityService;
-import ir.maktab56.hw15.base.service.impl.BaseEntityServiceImpl;
 import ir.maktab56.hw15.domain.Account;
+import ir.maktab56.hw15.domain.User;
 
-import java.util.List;
-
-public interface AccountService extends BaseEntityService<Account,Integer> {
-
-
-    Account createAccount();
-
-    List<Account> showUserAccounts();
+public interface AccountService extends BaseEntityService<Account, Integer> {
 
 
-    void removeAccount();
+    Account createAccount(User user);
+
+    void showUserAccounts(User user);
+
+    Account editAccount(User user);
+
+    void removeAccount(User user);
+
+
 
 }

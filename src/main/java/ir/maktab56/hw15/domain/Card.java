@@ -28,7 +28,7 @@ public class Card extends BaseEntity<Integer> {
     private String cardnumber;
 
     @Column(name = "PASSWORD")
-    private int password;
+    private String password;
 
     @Column(name = "SECOND_PASWORD")
     private String secondPassword;
@@ -70,11 +70,11 @@ public class Card extends BaseEntity<Integer> {
         this.cardnumber = String.valueOf(cardnumber);
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -91,8 +91,9 @@ public class Card extends BaseEntity<Integer> {
     }
 
     public void setCvv() {
-        Random r =new Random();
-        this.cvv = r.nextInt(900)+100;;
+        Random r = new Random();
+        this.cvv = r.nextInt(900) + 100;
+        ;
     }
 
     public Date getCreateDate() {
@@ -117,4 +118,13 @@ public class Card extends BaseEntity<Integer> {
 
     }
 
+    @Override
+    public String toString() {
+        return "Card{" +
+                "cardnumber='" + cardnumber + '\'' +
+                ", password='" + password + '\'' +
+                ", cvv=" + cvv +
+                ", expirationDate=" + expirationDate +
+                '}';
+    }
 }

@@ -58,9 +58,7 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
         System.out.println("Enter your age :");
         user.setAge(input.nextInt());
 
-        System.out.println("Wellcome to Refah Bank\n" +
-                "Your account has been created.\n" +
-                " You will have to wait for your account to be verified");
+        System.out.println("Wellcome to Refah Bank\n");
         save(user);
         return user;
     }
@@ -93,22 +91,7 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
                         save(user);
                     }
                     return null;
-                } else if (user.isActive() == false) {
-
-                    System.out.println("Your account is not Active\n" +
-                            "and you can not use the service\n\n" +
-                            "Do you want to leave a message for bank employees to expedite the activation process?\n" +
-                            "1 : YES\n" +
-                            "2 : NO");
-                    answer = input.nextInt();
-                    if (answer == 1) {
-                        System.out.println("Enter your message");
-                        String massage = new Scanner(System.in).nextLine();
-                        user.setMassage(massage);
-                        save(user);
-                        return null;
-                    }
-                } else {
+                }  else {
 
                     while (true) {
                         System.out.println("please Enter your password : ");

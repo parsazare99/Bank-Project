@@ -89,4 +89,14 @@ public class Bank extends BaseEntity<Integer> {
         this.employeeList = employeeList;
     }
 
+
+    public String showBankInfoForClient() {
+        return "Bank{" +
+                "id = '" + getId() + '\'' +
+                "name = '" + name + '\'' +
+                ", Branch ='" + Branch + '\'' +
+                ", managername ='" + managername + '\'' +
+                '}';
+    }
+
 }

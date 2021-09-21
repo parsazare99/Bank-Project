@@ -15,13 +15,13 @@ public class Account extends BaseEntity<Integer> {
     }
 
     @Column(name = "BALANCE")
-    private long balance=10000l;
+    private long balance = 10000l;
 
     @Column(name = "ACCOUNT_OPENING_DATE")
     private Date AccountOpeningDate;
 
-    @Column(name = "IS_BLOCKED")
-    private boolean isBlocked = false;
+    @Column(name = "IS_ACTIVE")
+    private boolean isActive = false;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
@@ -38,12 +38,12 @@ public class Account extends BaseEntity<Integer> {
     @OneToMany(mappedBy = "account")
     private List<Transaction> transactionList = new ArrayList<>();
 
-    public boolean isBlocked() {
-        return isBlocked;
+    public boolean isActive() {
+        return isActive;
     }
 
-    public void setBlocked(boolean blocked) {
-        isBlocked = blocked;
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public long getBalance() {
@@ -94,6 +94,14 @@ public class Account extends BaseEntity<Integer> {
         this.transactionList = transactionList;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Account{" +
+                "Id = " + getId() +
+                "balance = " + balance +
+                ", AccountOpeningDate = " + AccountOpeningDate +
+                ", isActive = " + isActive +
+                ", bank name = " + bank.getName() + "  " + ", bank branch = " + bank.getBranch() +
+                '}';
+    }
 }

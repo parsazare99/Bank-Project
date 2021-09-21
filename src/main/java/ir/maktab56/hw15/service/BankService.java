@@ -6,11 +6,11 @@ import ir.maktab56.hw15.domain.Bank;
 
 import java.util.List;
 
-public interface BankService extends BaseEntityService< Bank  ,Integer> {
+public interface BankService extends BaseEntityService<Bank, Integer> {
 
     List<Bank> addDefaultBranch();
 
-
+    void showBankInfoForClient();
 
 
 }

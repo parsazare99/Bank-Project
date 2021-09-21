@@ -24,6 +24,9 @@ public class Transaction extends BaseEntity<Integer> {
     @Column(name = "DESTINATION_CARD")
     private String DestinationCard;
 
+    @Column(name = "TRANSFER_AMOUNT")
+   private long TransferAmount;
+
     @Column(name = "DATE")
     private Date date;
 
@@ -37,6 +40,30 @@ public class Transaction extends BaseEntity<Integer> {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getOriginCard() {
+        return OriginCard;
+    }
+
+    public void setOriginCard(String originCard) {
+        OriginCard = originCard;
+    }
+
+    public long getTransferAmount() {
+        return TransferAmount;
+    }
+
+    public void setTransferAmount(long transferAmount) {
+        TransferAmount = transferAmount;
+    }
+
+    public String getDestinationCard() {
+        return DestinationCard;
+    }
+
+    public void setDestinationCard(String destinationCard) {
+        DestinationCard = destinationCard;
     }
 
     public Account getAccount() {
