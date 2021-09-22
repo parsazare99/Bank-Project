@@ -89,7 +89,7 @@ public class CardServiceImpl extends BaseEntityServiceImpl<Card, Integer, CardRe
                 while (true) {
                     System.out.println("Enter your second password :");
                     String second = new Scanner(System.in).next();
-                    if (second == account.getCard().getSecondPassword()) {
+                    if (second.equals(account.getCard().getSecondPassword())) {
                         break;
                     } else {
                         System.out.println("Wrong Second Password!!!!");
@@ -150,4 +150,6 @@ public class CardServiceImpl extends BaseEntityServiceImpl<Card, Integer, CardRe
         }
         save(card);
     }
+
+
 }

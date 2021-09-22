@@ -62,7 +62,6 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
         save(user);
         return user;
     }
-
     @Override
     public User logInUser() {
         int answer = 0;
@@ -91,12 +90,12 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
                         save(user);
                     }
                     return null;
-                }  else {
+                } else {
 
                     while (true) {
                         System.out.println("please Enter your password : ");
                         password = input.next();
-                        if (password == user.getPassword()) {
+                        if (password.equals(user.getPassword())) {
                             System.out.println("The log in was successful !");
                             return user;
                         } else {

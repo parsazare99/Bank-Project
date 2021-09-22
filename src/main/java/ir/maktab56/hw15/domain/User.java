@@ -42,7 +42,7 @@ public class User extends BaseEntity<Integer> {
     @Column(name = "AGE", nullable = false)
     private int age;
 
-    @Column(name = "PHONE_NUMBER", nullable = false)
+    @Column(name = "PHONE_NUMBER")
     private String phonenumber;
 
     @Column(name = "IS_BLOCKED")

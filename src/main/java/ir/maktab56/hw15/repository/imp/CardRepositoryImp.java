@@ -32,7 +32,7 @@ public class CardRepositoryImp extends BaseEntityRepositoryImpl<Card, Integer> i
         Card card = entityManager.createQuery(
                 "from " + getEntityClass().getSimpleName() +
                         " u where u.cardnumber = :cardnumber"
-                , this.getEntityClass()).setParameter("username", cardNumbr).getSingleResult();
+                , this.getEntityClass()).setParameter("cardnumber", cardNumbr).getSingleResult();
 
         return card;
     }

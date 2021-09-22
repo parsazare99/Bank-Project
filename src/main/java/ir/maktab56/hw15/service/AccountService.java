@@ -15,6 +15,7 @@ public interface AccountService extends BaseEntityService<Account, Integer> {
 
     void removeAccount(User user);
 
-
+    void withdrawFromAccount(User user);
+    void IncreaseAccountBalance(User user);
 
 }

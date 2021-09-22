@@ -112,7 +112,7 @@ public class EmployeeServiceImpl extends BaseEntityServiceImpl<Employee, Integer
                     while (true) {
                         System.out.println("please Enter your password : ");
                         password = new Scanner(System.in).next();
-                        if (password == employee.getPassword()) {
+                        if (password.equals( employee.getPassword())) {
                             System.out.println("The log in was successful !");
                             return employee;
                         } else {

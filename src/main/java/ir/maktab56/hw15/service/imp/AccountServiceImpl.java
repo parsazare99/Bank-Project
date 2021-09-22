@@ -19,7 +19,6 @@ public class AccountServiceImpl extends BaseEntityServiceImpl<Account, Integer, 
         implements AccountService {
 
 
-
     public AccountServiceImpl(AccountRepository repository) {
         super(repository);
     }
@@ -31,7 +30,7 @@ public class AccountServiceImpl extends BaseEntityServiceImpl<Account, Integer, 
         UserServiceImpl userService = new UserServiceImpl(new UserRepositoryImpl(HibernateUtil.getEntityMangerFactory().createEntityManager()));
 
 
-        user=userService.findById(user.getId());
+        user = userService.findById(user.getId());
         Account account = new Account();
         String cardPassword;
         bankService.showBankInfoForClient();
@@ -98,5 +97,68 @@ public class AccountServiceImpl extends BaseEntityServiceImpl<Account, Integer, 
 
     }
 
+    @Override
+    public void withdrawFromAccount(User user) {
 
+
+        showUserAccounts(user);
+        System.out.println("enter your account id : ");
+        int id = new Scanner(System.in).nextInt();
+        if (existsById(id)) {
+            Account byId = findById(id);
+            System.out.println("Enter the amount you want to withdraw from the account");
+            long withdraw = new Scanner(System.in).nextLong();
+            if (byId.getBalance() - withdraw >= 10000l) {
+                int count = 0;
+                while (true) {
+
+                    System.out.println("enter your password");
+                    String pass = new Scanner(System.in).next();
+                    if (pass == byId.getCard().getPassword()) {
+                        byId.setBalance(byId.getBalance() - withdraw);
+                        save(byId);
+                        break;
+
+
+                    } else {
+                        count++;
+                        if (count == 3) {
+                            byId.setBlocked(true);
+                            save(byId);
+                            System.out.println("your account is blocked ..");
+                            break;
+                        }
+                    }
+
+
+                }
+
+
+            } else {
+                System.out.println("Your account balance is not enough");
+            }
+
+
+        } else {
+            System.out.println("account nit found !!");
+        }
+
+
+    }
+
+    @Override
+    public void IncreaseAccountBalance(User user) {
+
+        showUserAccounts(user);
+        System.out.println("enter your account id : ");
+        int id = new Scanner(System.in).nextInt();
+        if (existsById(id)) {
+            Account byId = findById(id);
+            System.out.println("Enter the amount you want to increase account balance");
+            long increase = new Scanner(System.in).nextLong();
+            byId.setBalance(byId.getBalance() + increase);
+            save(byId);
+        }
+
+    }
 }
