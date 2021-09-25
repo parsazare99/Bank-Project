@@ -109,10 +109,11 @@ public class Account extends BaseEntity<Integer> {
     public String toString() {
         return "Account{" +
                 "Id = " + getId() +
-                "balance = " + balance +
+                ", balance = " + balance +
                 ", AccountOpeningDate = " + AccountOpeningDate +
                 ", isActive = " + isActive +
                 ", isBlocked = " + isBlocked +
+                ", account owner = " + getUser().getFirstname() +" "+getUser().getLastname()+
                 ", bank name = " + bank.getName() + "  " + ", bank branch = " + bank.getBranch() +
                 '}';
     }

@@ -62,6 +62,7 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
         save(user);
         return user;
     }
+
     @Override
     public User logInUser() {
         int answer = 0;
@@ -84,7 +85,7 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
                             "2 : NO");
                     answer = input.nextInt();
                     if (answer == 1) {
-                        System.out.println("Enter your message");
+                        System.out.println("Enter your message..");
                         String massage = new Scanner(System.in).nextLine();
                         user.setMassage(massage);
                         save(user);
@@ -103,14 +104,14 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
                             if (wrongPassword == 3) {
                                 user.setBlocked(true);
                                 save(user);
-                                System.out.println("Your account has been blocked\n" +
+                                System.out.println("Your account has been blocked  \n" +
                                         "due to incorrect password entry");
                                 System.out.println("Do you want to leave a message for bank employees to unblock your account?\n" +
                                         "1 : YES\n" +
                                         "2 : NO");
                                 answer = input.nextInt();
                                 if (answer == 1) {
-                                    System.out.println("Enter your message");
+                                    System.out.println("Enter your message...");
                                     user.setMassage(new Scanner(System.in).nextLine());
                                     save(user);
                                 }
@@ -118,16 +119,19 @@ public class UserServiceImpl extends BaseEntityServiceImpl<User, Integer, UserRe
 
                             }
                         }
+                        System.out.println("wrong password!!\n" +
+                                "please try again");
 
                     }
 
                 }
 
             } else {
-                wrongUsername++;
-                if (wrongUsername == 3) break;
                 System.out.println("This username is not available!!!\n" +
                         "please try again");
+                wrongUsername++;
+                if (wrongUsername == 3) break;
+
 
             }
 

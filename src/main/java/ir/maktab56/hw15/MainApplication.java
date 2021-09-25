@@ -103,6 +103,7 @@ public class MainApplication {
                                             if (ApplicationContext.getAccountService().existsById(id)) {
 
                                                 Account byId = ApplicationContext.getAccountService().findById(id);
+                                                System.out.println("<><><><><><><><><><><><><><><><><><><><><><><>");
                                                 ApplicationContext.getCardService().CardToCard(byId);
                                             }
 
@@ -124,6 +125,7 @@ public class MainApplication {
                                             if (ApplicationContext.getAccountService().existsById(id)) {
 
                                                 Account byId = ApplicationContext.getAccountService().findById(id);
+                                                System.out.println("<><><><><><><><><><><><><><><><><><><><><><><>");
                                                 ApplicationContext.getCardService().changeSecondPassword(byId);
                                             }
                                         } else break;
@@ -135,45 +137,69 @@ public class MainApplication {
 
                             }
                         } else {
-                            System.out.println("log in error");
+                            if (user == null) {
+                                System.out.println("log in error");
+                            }
+
                             break;
                         }
 
 
                     } else if (answer == 2) {
                         Employee employee = ApplicationContext.getEmployeeService().logInEmployee();
-                        if (employee.isManager()) {
 
-                            System.out.println("1 : active employee\n" +
-                                    "2 : active user account\n" +
-                                    "3 : show All Employees\n" +
-                                    "4 : Exit ");
-                            answer = input.nextInt();
-                            if (answer == 1) {
-                                ApplicationContext.getEmployeeService().managerService(employee);
-                            } else if (answer == 2) {
-                                ApplicationContext.getEmployeeService().activeAndUnBlockAccount(employee);
-                            } else if (answer == 3) {
+
+                        if (employee != null) {
+                            if (employee.isActive() && !employee.isBlocked()) {
+                                while (true) {
+                                    if (employee.isManager()) {
+                                        System.out.println("<><><><><><><><><><><><><><><><><><><><><><><>");
+                                        System.out.println("1 : active/de active employee\n" +
+                                                "2 : active/de active user account\n" +
+                                                "3 : show All Employees\n" +
+                                                "4 : Exit ");
+                                        answer = input.nextInt();
+                                        if (answer == 1) {
+                                            System.out.println("<><><><><><><><><><><><><><><><><><><><><><><>");
+                                            ApplicationContext.getEmployeeService().managerService(employee);
+                                        } else if (answer == 2) {
+                                            System.out.println("<><><><><><><><><><><><><><><><><><><><><><><>");
+                                            ApplicationContext.getEmployeeService().activeAndUnBlockAccount(employee);
+                                        } else if (answer == 3) {
+                                            System.out.println("<><><><><><><><><><><><><><><><><><><><><><><>");
+                                            ApplicationContext.getEmployeeService().showAllEmployeesForManager(employee);
+                                        } else break;
+
+
+                                    } else {
+                                        System.out.println("<><><><><><><><><><><><><><><><><><><><><><><>");
+                                        System.out.println("1 : active/de active or block/unblock user account\n" +
+                                                "2 : show user account\n" +
+                                                "3 : Exit "
+                                        );
+                                        answer = input.nextInt();
+                                        if (answer == 1) {
+                                            System.out.println("<><><><><><><><><><><><><><><><><><><><><><><>");
+                                            ApplicationContext.getEmployeeService().activeAndUnBlockAccount(employee);
+                                        } else if (answer == 2) {
+                                            System.out.println("<><><><><><><><><><><><><><><><><><><><><><><>");
+                                            ApplicationContext.getEmployeeService().showAllAccountForEmployee(employee);
+
+                                        } else break;
+
+                                    }
+                                }
+
+                            } else {
+
+                                break;
                             }
-                            ApplicationContext.getEmployeeService().showAllEmployeesForManager(employee);
-
 
 
                         } else {
-
-                            System.out.println("1 : active user account\n" +
-                                    "2 : show user account\n" +
-                                    "3 : Exit "
-                            );
-                            answer = input.nextInt();
-                            if (answer == 1) {
-                                ApplicationContext.getEmployeeService().activeAndUnBlockAccount(employee);
-                            } else if (answer == 2) {
-                                ApplicationContext.getEmployeeService().showAllAccountForEmployee(employee);
-
-                            }
-
+                            System.out.println("log in error");
                         }
+
 
                     } else {
                         break;

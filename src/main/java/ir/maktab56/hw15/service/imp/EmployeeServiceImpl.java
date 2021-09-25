@@ -106,13 +106,27 @@ public class EmployeeServiceImpl extends BaseEntityServiceImpl<Employee, Integer
                         employee.setMassage(massage);
                         save(employee);
                     }
-                    return null;
+                    return employee;
+                } else if (!employee.isActive()) {
+                    System.out.println("Your account not active \n" +
+                            "and you can not use the service\n\n" +
+                            "Do you want to leave a message for bank manager to active your account?\n" +
+                            "1 : YES\n" +
+                            "2 : NO");
+                    answer = new Scanner(System.in).nextInt();
+                    if (answer == 1) {
+                        System.out.println("Enter your message...");
+                        String massage = new Scanner(System.in).nextLine();
+                        employee.setMassage(massage);
+                        save(employee);
+                    }
+                    return employee;
                 } else {
 
                     while (true) {
                         System.out.println("please Enter your password : ");
                         password = new Scanner(System.in).next();
-                        if (password.equals( employee.getPassword())) {
+                        if (password.equals(employee.getPassword())) {
                             System.out.println("The log in was successful !");
                             return employee;
                         } else {
@@ -136,6 +150,8 @@ public class EmployeeServiceImpl extends BaseEntityServiceImpl<Employee, Integer
                             }
                         }
 
+                        System.out.println("wrong password!!\n" +
+                                "please try again");
                     }
 
                 }
@@ -210,63 +226,70 @@ public class EmployeeServiceImpl extends BaseEntityServiceImpl<Employee, Integer
     @Override
     public void activeAndUnBlockAccount(Employee employee) {
         showAllAccountForEmployee(employee);
-        System.out.println("Enter the ID of the account you want");
-        int accoountId = new Scanner(System.in).nextInt();
-        Account account = accountService.findById(accoountId);
-
-        System.out.println("1 : Block Account or Unblock" +
-                "2 : Active Account or Deactivate ");
-        int ans = new Scanner(System.in).nextInt();
-
-        if (ans == 1) {
-
-            if (account.isBlocked()) {
-                System.out.println("do you want UnBlock this account ?\n" +
-                        "1 : YES\n" +
-                        "2 : NO");
-                ans = new Scanner(System.in).nextInt();
-                if (ans == 1) {
-                    account.setBlocked(false);
-                }
-
-            } else {
-                System.out.println("do you want Block this account ?\n" +
-                        "1 : YES\n" +
-                        "2 : NO");
-                ans = new Scanner(System.in).nextInt();
-                if (ans == 1) {
-                    account.setBlocked(true);
-                }
-            }
-
-
-        } else if (ans == 2) {
-
-            if (account.isActive()) {
-                System.out.println("do you want Deactivate this account ?\n" +
-                        "1 : YES\n" +
-                        "2 : NO");
-                ans = new Scanner(System.in).nextInt();
-                if (ans == 1) {
-                    account.setActive(false);
-                }
-
-            } else {
-                System.out.println("do you want Activate this account ?\n" +
-                        "1 : YES\n" +
-                        "2 : NO");
-                ans = new Scanner(System.in).nextInt();
-                if (ans == 1) {
-                    account.setActive(true);
-                }
-            }
-
-
+        Bank bank = employee.getBank();
+        List<Account> accountList = bank.getAccountList();
+        if (accountList.size() == 0 || accountList == null) {
+            //System.out.println("There is no account to display");
         } else {
-            System.out.println("wrong answer!!");
+            System.out.println("Enter the ID of the account you want");
+            int accoountId = new Scanner(System.in).nextInt();
+            Account account = accountService.findById(accoountId);
+
+            System.out.println("1 : Block Account or Unblock\n" +
+                    "2 : Active Account or Deactivate ");
+            int ans = new Scanner(System.in).nextInt();
+
+            if (ans == 1) {
+
+                if (account.isBlocked()) {
+                    System.out.println("do you want UnBlock this account ?\n" +
+                            "1 : YES\n" +
+                            "2 : NO");
+                    ans = new Scanner(System.in).nextInt();
+                    if (ans == 1) {
+                        account.setBlocked(false);
+                    }
+
+                } else {
+                    System.out.println("do you want Block this account ?\n" +
+                            "1 : YES\n" +
+                            "2 : NO");
+                    ans = new Scanner(System.in).nextInt();
+                    if (ans == 1) {
+                        account.setBlocked(true);
+                    }
+                }
+
+
+            } else if (ans == 2) {
+
+                if (account.isActive()) {
+                    System.out.println("do you want Deactivate this account ?\n" +
+                            "1 : YES\n" +
+                            "2 : NO");
+                    ans = new Scanner(System.in).nextInt();
+                    if (ans == 1) {
+                        account.setActive(false);
+                    }
+
+                } else {
+                    System.out.println("do you want Activate this account ?\n" +
+                            "1 : YES\n" +
+                            "2 : NO");
+                    ans = new Scanner(System.in).nextInt();
+                    if (ans == 1) {
+                        account.setActive(true);
+                    }
+                }
+
+
+            } else {
+                System.out.println("wrong answer!!");
+            }
+
+            accountService.save(account);
         }
 
-        accountService.save(account);
 
     }
 

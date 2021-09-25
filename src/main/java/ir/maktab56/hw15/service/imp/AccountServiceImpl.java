@@ -18,7 +18,6 @@ import java.util.Scanner;
 public class AccountServiceImpl extends BaseEntityServiceImpl<Account, Integer, AccountRepository>
         implements AccountService {
 
-
     public AccountServiceImpl(AccountRepository repository) {
         super(repository);
     }
@@ -38,6 +37,7 @@ public class AccountServiceImpl extends BaseEntityServiceImpl<Account, Integer, 
         int id = new Scanner(System.in).nextInt();
         Bank bank = bankService.findById(id);
         account.setBank(bank);
+        account.setUser(user);
         Card card = new Card();
         while (true) {
             System.out.println("Choose a four-digit password for your card");
@@ -54,9 +54,6 @@ public class AccountServiceImpl extends BaseEntityServiceImpl<Account, Integer, 
         System.out.println("Your account has been created\n" +
                 " You will have to wait for your account to be verified\n");
 
-        System.out.println(account.toString());
-        System.out.println(account.getCard().toString());
-
         System.out.println("Your account is not Active\n" +
                 "and you can not use the service\n\n" +
                 "Do you want to leave a message for bank employees to expedite the activation process?\n" +
@@ -70,19 +67,28 @@ public class AccountServiceImpl extends BaseEntityServiceImpl<Account, Integer, 
             userService.save(user);
 
         }
+        System.out.println("Account infomation : ");
+        System.out.println(account.toString());
+        System.out.println(account.getCard().toString());
         save(account);
         return account;
     }
-
 
     @Override
     public void showUserAccounts(User user) {
         UserServiceImpl userService = new UserServiceImpl(new UserRepositoryImpl(HibernateUtil.getEntityMangerFactory().createEntityManager()));
 
+        user = userService.findById(user.getId());
+        List<Account> accountList = user.getAccountList();
 
-        List<Account> accountList = userService.findById(user.getId()).getAccountList();
-        for (Account a : accountList) {
-            a.toString();
+        if (accountList.size() == 0 || accountList == null) {
+
+            System.out.println("There is no account to display");
+
+        } else {
+            for (Account a : accountList) {
+                System.out.println(a.toString());
+            }
         }
     }
 
@@ -106,39 +112,42 @@ public class AccountServiceImpl extends BaseEntityServiceImpl<Account, Integer, 
         int id = new Scanner(System.in).nextInt();
         if (existsById(id)) {
             Account byId = findById(id);
-            System.out.println("Enter the amount you want to withdraw from the account");
-            long withdraw = new Scanner(System.in).nextLong();
-            if (byId.getBalance() - withdraw >= 10000l) {
-                int count = 0;
-                while (true) {
+            if (byId.isActive()) {
+                System.out.println("Enter the amount you want to withdraw from the account");
+                long withdraw = new Scanner(System.in).nextLong();
+                if (byId.getBalance() - withdraw >= 10000l) {
+                    int count = 0;
+                    while (true) {
 
-                    System.out.println("enter your password");
-                    String pass = new Scanner(System.in).next();
-                    if (pass == byId.getCard().getPassword()) {
-                        byId.setBalance(byId.getBalance() - withdraw);
-                        save(byId);
-                        break;
-
-
-                    } else {
-                        count++;
-                        if (count == 3) {
-                            byId.setBlocked(true);
+                        System.out.println("enter your password");
+                        String pass = new Scanner(System.in).next();
+                        if (pass.equals(byId.getCard().getPassword())) {
+                            byId.setBalance(byId.getBalance() - withdraw);
                             save(byId);
-                            System.out.println("your account is blocked ..");
                             break;
+
+
+                        } else {
+                            count++;
+                            if (count == 3) {
+                                byId.setBlocked(true);
+                                save(byId);
+                                System.out.println("your account is blocked ..");
+                                break;
+                            }
                         }
+
+
                     }
 
 
+                } else {
+                    System.out.println("Your account balance is not enough");
                 }
 
-
             } else {
-                System.out.println("Your account balance is not enough");
+                System.out.println("your accout is not active !!");
             }
-
-
         } else {
             System.out.println("account nit found !!");
         }
@@ -154,10 +163,17 @@ public class AccountServiceImpl extends BaseEntityServiceImpl<Account, Integer, 
         int id = new Scanner(System.in).nextInt();
         if (existsById(id)) {
             Account byId = findById(id);
-            System.out.println("Enter the amount you want to increase account balance");
-            long increase = new Scanner(System.in).nextLong();
-            byId.setBalance(byId.getBalance() + increase);
-            save(byId);
+            if (byId.isActive()) {
+                System.out.println("Enter the amount you want to increase account balance");
+                long increase = new Scanner(System.in).nextLong();
+                byId.setBalance(byId.getBalance() + increase);
+                save(byId);
+            } else {
+                System.out.println("your account is not active!!");
+            }
+
+        } else {
+            System.out.println("account id not exsist !");
         }
 
     }
